@@ -6,7 +6,7 @@ services:
 
   web: 
 
-    image: litespeedtech/openlitespeed:1.7.18 # PHP 8.2 baked in 
+    image: litespeedtech/openlitespeed:latest # PHP 8.2 baked in 
 
     container_name: mc-wp-litespeed 
 
