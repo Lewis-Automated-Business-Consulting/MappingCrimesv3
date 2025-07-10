@@ -1,0 +1,70 @@
+version: "3.8" 
+
+ 
+
+services: 
+
+  web: 
+
+    image: litespeedtech/openlitespeed:1.7.18 # PHP 8.2 baked in 
+
+    container_name: mc-wp-litespeed 
+
+    ports: 
+
+      - "8080:80"     # WordPress 
+
+      - "7080:7080"   # LiteSpeed Admin 
+
+    environment: 
+
+      LSADMIN_USER: admin 
+
+      LSADMIN_PASS: admin123 
+
+      WORDPRESS_DB_HOST: db 
+
+      WORDPRESS_DB_USER: root 
+
+      WORDPRESS_DB_PASSWORD: example 
+
+      WORDPRESS_DB_NAME: mappingcrimes 
+
+    volumes: 
+
+      - ./wp-content:/var/www/html/wp-content 
+
+      - ./config/php:/usr/local/lsws/lsphp74/etc 
+
+    depends_on: 
+
+      - db 
+
+ 
+
+  db: 
+
+    image: mysql:5.7      # same major as Hostinger 
+
+    container_name: mc-db 
+
+    command: --default-authentication-plugin=mysql_native_password 
+
+    environment: 
+
+      MYSQL_ROOT_PASSWORD: example 
+
+      MYSQL_DATABASE: mappingcrimes 
+
+    volumes: 
+
+      - db_data:/var/lib/mysql 
+
+ 
+
+volumes: 
+
+  db_data: 
+	
+
+	
