@@ -1,70 +1,36 @@
-version: "3.8" 
+version: "3.8"
 
- 
+services:
+  web:
+    image: litespeedtech/openlitespeed:latest # Verify PHP 8.2 post-setup
+    container_name: mc-wp-litespeed
+    ports:
+      - "8080:80"     # WordPress
+      - "7080:7080"   # LiteSpeed Admin
+    environment:
+      LSADMIN_USER: admin
+      LSADMIN_PASS: admin123
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: example
+      WORDPRESS_DB_NAME: mappingcrimes
+    volumes:
+      - ./wordpress:/var/www/html    # Mount entire WordPress directory
+      - ./wp-content:/var/www/html/wp-content  # Optional: separate content mount
+      - ./config/php:/usr/local/lsws/lsphp74/etc  # Custom PHP config (if needed)
+    command: >
+      bash -c "apt-get update && apt-get install -y php8.2-gd php8.2-curl php8.2-xml php8.2-mbstring && /usr/local/lsws/bin/lswsctrl start"
+    depends_on:
+      - db
 
-services: 
+  db:
+    image: mysql:8.0    # Updated to MySQL 8 for compatibility
+    container_name: mc-db
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: mappingcrimes
+    volumes:
+      - db_data:/var/lib/mysql
 
-  web: 
-
-    image: litespeedtech/openlitespeed:latest # PHP 8.2 baked in 
-
-    container_name: mc-wp-litespeed 
-
-    ports: 
-
-      - "8080:80"     # WordPress 
-
-      - "7080:7080"   # LiteSpeed Admin 
-
-    environment: 
-
-      LSADMIN_USER: admin 
-
-      LSADMIN_PASS: admin123 
-
-      WORDPRESS_DB_HOST: db 
-
-      WORDPRESS_DB_USER: root 
-
-      WORDPRESS_DB_PASSWORD: example 
-
-      WORDPRESS_DB_NAME: mappingcrimes 
-
-    volumes: 
-
-      - ./wp-content:/var/www/html/wp-content 
-
-      - ./config/php:/usr/local/lsws/lsphp74/etc 
-
-    depends_on: 
-
-      - db 
-
- 
-
-  db: 
-
-    image: mysql:5.7      # same major as Hostinger 
-
-    container_name: mc-db 
-
-    command: --default-authentication-plugin=mysql_native_password 
-
-    environment: 
-
-      MYSQL_ROOT_PASSWORD: example 
-
-      MYSQL_DATABASE: mappingcrimes 
-
-    volumes: 
-
-      - db_data:/var/lib/mysql 
-
- 
-
-volumes: 
-
-  db_data: 
-	
-
-	
+volumes:
+  db_data:
