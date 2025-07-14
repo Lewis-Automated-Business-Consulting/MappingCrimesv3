@@ -8,11 +8,11 @@ services:
       - "8080:80"     # WordPress
       - "7080:7080"   # LiteSpeed Admin
     environment:
-      LSADMIN_USER: admin
-      LSADMIN_PASS: admin123
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: example
+      LSADMIN_USER: mc-admin
+      LSADMIN_PASS: 12f69QPtxir9Wt3
+      WORDPRESS_DB_HOST: localhost
+      WORDPRESS_DB_USER: mc-dev
+      WORDPRESS_DB_PASSWORD: 5mCNe3gAtP_t6YDple
       WORDPRESS_DB_NAME: mappingcrimes
     volumes:
       - ./wordpress:/var/www/html    # Mount entire WordPress directory
@@ -27,8 +27,8 @@ services:
     image: mysql:8.0    # Updated to MySQL 8 for compatibility
     container_name: mc-db
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: mappingcrimes
+      MYSQL_ROOT_PASSWORD: ozH0o31q5TW0
+      MYSQL_DATABASE: mappingcrimes-db
     volumes:
       - db_data:/var/lib/mysql
 
