@@ -2,29 +2,22 @@ version: "3.8"
 
 services:
   web:
-    image: litespeedtech/openlitespeed:latest # Verify PHP 8.2 post-setup
-    container_name: mc-wp-litespeed
+    image: wordpress:6.4-php8.2-apache
+    container_name: mc-wp
     ports:
-      - "8080:80"     # WordPress
-      - "7080:7080"   # LiteSpeed Admin
+      - "8080:80"
     environment:
-      LSADMIN_USER: admin
-      LSADMIN_PASS: admin123
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: example
       WORDPRESS_DB_NAME: mappingcrimes
     volumes:
-      - ./wordpress:/var/www/html    # Mount entire WordPress directory
-      - ./wp-content:/var/www/html/wp-content  # Optional: separate content mount
-      - ./config/php:/usr/local/lsws/lsphp74/etc  # Custom PHP config (if needed)
-    command: >
-      bash -c "apt-get update && apt-get install -y php8.2-gd php8.2-curl php8.2-xml php8.2-mbstring && /usr/local/lsws/bin/lswsctrl start"
+      - ../wordpress:/var/www/html
     depends_on:
       - db
 
   db:
-    image: mysql:8.0    # Updated to MySQL 8 for compatibility
+    image: mysql:8.0
     container_name: mc-db
     environment:
       MYSQL_ROOT_PASSWORD: example
