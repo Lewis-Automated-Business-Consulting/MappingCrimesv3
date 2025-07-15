@@ -1,0 +1,25 @@
+# WordPress core exclusions
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/ai-backups/
+*.log
+*.sql
+*.zip
+
+# Composer / Node
+vendor/
+node_modules/
+
+# Secrets and environment
+.env
+.env.local
+.DS_Store
+
+# OS or IDE generated
+*.swp
+*.swo
+*.bak
+Thumbs.db
+.vscode/
+.idea/
