@@ -18,8 +18,8 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          echo "$SSH_KEY" > ~/.ssh/mc-dev
+          chmod 600 ~/.ssh/mc-dev
           ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
 
       - name: Rsync wp-content to beta
